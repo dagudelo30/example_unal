@@ -1,0 +1,91 @@
+diff --git a/README.md b/README.md
+index 01bb2fa..a006000 100644
+--- a/README.md
++++ b/README.md
+@@ -1,6 +1,6 @@
+ # Visualización genérica de datos de Google Earth Engine
+ 
+-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/notebooks/gee_data_visualization.ipynb)
++[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dagudelo30/example_unal/blob/main/notebooks/gee_data_visualization.ipynb)
+ 
+ Notebook educativo y técnico para **consultar, procesar y visualizar** datasets del catálogo de [Google Earth Engine](https://earthengine.google.com/) (GEE) con Python, `earthengine-api` y `geemap`. Cambias unos pocos parámetros (dataset, banda, período, área de estudio, visualización) y obtienes mapas interactivos, estadísticas y, si quieres, exportaciones, **sin modificar la lógica principal**.
+ 
+@@ -48,11 +48,11 @@ Para crecer el proyecto sin tocar la lógica principal:
+ 
+ ## Abrir en Google Colab
+ 
+-1. Sube el repositorio a GitHub.
+-2. Edita **dos lugares** para reemplazar `USUARIO` y `REPOSITORIO` por tu usuario (u organización) y el nombre del repositorio:
+-   - El badge al inicio de este `README.md`.
+-   - El badge de la primera celda del notebook.
+-3. Haz clic en el badge **Open in Colab**.
++Haz clic en el badge **Open in Colab** al inicio de este README o abre directamente:
++
++<https://colab.research.google.com/github/dagudelo30/example_unal/blob/main/notebooks/gee_data_visualization.ipynb>
++
++El mismo enlace está en la primera celda del notebook. Si mueves o renombras el notebook, o cambias de rama, actualiza **ambos** badges.
+ 
+ Formato del enlace:
+ 
+@@ -60,16 +60,16 @@ Formato del enlace:
+ https://colab.research.google.com/github/<USUARIO>/<REPOSITORIO>/blob/<RAMA>/<RUTA_AL_NOTEBOOK>
+ ```
+ 
+-Ejemplo con la estructura propuesta:
++Enlace actual de este repositorio:
+ 
+ ```
+-https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/notebooks/gee_data_visualization.ipynb
++https://colab.research.google.com/github/dagudelo30/example_unal/blob/main/notebooks/gee_data_visualization.ipynb
+ ```
+ 
+ Si mueves o renombras el notebook, o usas otra rama (p. ej. `master`), cambia `<RAMA>` y `<RUTA_AL_NOTEBOOK>` en ambos badges. El código Markdown del badge es:
+ 
+ ```markdown
+-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/notebooks/gee_data_visualization.ipynb)
++[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dagudelo30/example_unal/blob/main/notebooks/gee_data_visualization.ipynb)
+ ```
+ 
+ > Colab abre **solo el notebook**, no el resto del repositorio. Por eso el notebook genera automáticamente el GeoJSON de ejemplo si no encuentra `data/aoi_example.geojson`, y también acepta una URL *raw* de GitHub en `AOI_GEOJSON`.
+@@ -91,8 +91,8 @@ Si es tu primera vez con GEE, sigue **[GOOGLE_CLOUD_SETUP.md](GOOGLE_CLOUD_SETUP
+ ## Instalación local
+ 
+ ```bash
+-git clone https://github.com/USUARIO/REPOSITORIO.git
+-cd REPOSITORIO
++git clone https://github.com/dagudelo30/example_unal.git
++cd example_unal
+ 
+ python -m venv .venv
+ source .venv/bin/activate          # Windows: .venv\Scripts\activate
+diff --git a/notebooks/gee_data_visualization.ipynb b/notebooks/gee_data_visualization.ipynb
+index 6368854..0fa26ad 100644
+--- a/notebooks/gee_data_visualization.ipynb
++++ b/notebooks/gee_data_visualization.ipynb
+@@ -5,7 +5,7 @@
+    "id": "83cc0239",
+    "metadata": {},
+    "source": [
+-    "<a href=\"https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/notebooks/gee_data_visualization.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>\n",
++    "<a href=\"https://colab.research.google.com/github/dagudelo30/example_unal/blob/main/notebooks/gee_data_visualization.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>\n",
+     "\n",
+     "# Visualización genérica de datos geoespaciales de Google Earth Engine (GEE)\n",
+     "\n",
+@@ -15,7 +15,7 @@
+     "\n",
+     "> **Antes de empezar:** necesitas un proyecto de Google Cloud registrado para Earth Engine. Si nunca has usado GEE, sigue primero la guía [`GOOGLE_CLOUD_SETUP.md`](../GOOGLE_CLOUD_SETUP.md) del repositorio.\n",
+     "\n",
+-    "> **Sobre el botón “Open in Colab”:** apunta a `https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/notebooks/gee_data_visualization.ipynb`. Reemplaza `USUARIO` y `REPOSITORIO` por tu usuario y repositorio de GitHub (ver la sección “Abrir en Google Colab” del `README.md`)."
++    "> **Sobre el botón “Open in Colab”:** apunta a `https://colab.research.google.com/github/dagudelo30/example_unal/blob/main/notebooks/gee_data_visualization.ipynb`. Si mueves o renombras el notebook, actualiza el enlace (ver la sección “Abrir en Google Colab” del `README.md`)."
+    ]
+   },
+   {
+@@ -240,7 +240,7 @@
+     "]\n",
+     "\n",
+     "# Ruta local, ruta relativa al repositorio o URL raw de GitHub, p. ej.:\n",
+-    "# \"https://raw.githubusercontent.com/USUARIO/REPOSITORIO/main/data/aoi_example.geojson\"\n",
++    "# \"https://raw.githubusercontent.com/dagudelo30/example_unal/main/data/aoi_example.geojson\"\n",
+     "AOI_GEOJSON = \"data/aoi_example.geojson\"\n",
+     "\n",
+     "AOI_ADMIN = {\n",
