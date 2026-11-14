@@ -1,1 +1,74 @@
 Ejercicio 1 updated
+
+import streamlit as st
+import pandas as pd
+import io
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent))
+from curator.llm_curator import analyze_scientific_name
+
+st.set_page_config(
+    page_title="PTFI Curation Assistant",
+    page_icon="🔬",
+    layout="wide",
+    initial_sidebar_state="collapsed",
+)
+
+# ── CSS (solo styling, sin contenido) ────────────────────────────────────────
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+html, body, [class*="css"], .stMarkdown, p, label { font-family: 'IBM Plex Sans', sans-serif !important; }
+
+/* Metric overrides */
+[data-testid="metric-container"] { background:#0f1117; border:1px solid #1e2130; border-radius:8px; padding:10px 14px; }
+[data-testid="metric-container"] label { font-family:'IBM Plex Mono',monospace !important; font-size:10px !important; color:#6b7280 !important; text-transform:uppercase; letter-spacing:0.1em; }
+[data-testid="metric-container"] [data-testid="stMetricValue"] { font-family:'IBM Plex Mono',monospace !important; font-size:22px !important; }
+
+/* Verdict color classes used inline */
+.stAlert { border-radius: 8px !important; }
+
+/* Input fields */
+.stTextInput input { font-family:'IBM Plex Mono',monospace !important; font-size:13px !important; background:#0f1117 !important; color:#e5e7eb !important; border-color:#2a2d3a !important; }
+.stNumberInput input { font-family:'IBM Plex Mono',monospace !important; font-size:13px !important; }
+
+/* Buttons */
+.stButton button { font-family:'IBM Plex Mono',monospace !important; font-size:12px !important; letter-spacing:0.04em; }
+.stButton button[kind="primary"] { background:#166534 !important; border-color:#166534 !important; color:#f0fdf4 !important; }
+.stButton button[kind="primary"]:hover { background:#15803d !important; }
+
+/* Dividers */
+hr { border-color: #1e2130 !important; }
+
+/* Selectbox */
+.stSelectbox label { font-family:'IBM Plex Mono',monospace !important; font-size:11px !important; color:#6b7280 !important; }
+</style>
+""", unsafe_allow_html=True)
+
+# ── Session state ─────────────────────────────────────────────────────────────
+def init_state():
+    defaults = {
+        "df": None, "filename": None, "current_idx": 0,
+        "api_key": "", "llm_result": None, "edited_value": "",
+        "model": "openai/gpt-4o", "actions_log": {},
+    }
+    for k, v in defaults.items():
+        if k not in st.session_state:
+            st.session_state[k] = v
+
+init_state()
+
+# ── Helpers ───────────────────────────────────────────────────────────────────
+VERDICT_CONFIG = {
+    "OK":               {"color": "green",  "icon": "✓", "label": "OK — correct"},
+    "EMPTY_CORRECT":    {"color": "gray",   "icon": "○", "label": "Empty — correct"},
+    "MISSING":          {"color": "orange", "icon": "⚠", "label": "Missing value"},
+    "FORMAT_ERROR":     {"color": "blue",   "icon": "✎", "label": "Format error"},
+    "QUERY":            {"color": "orange", "icon": "?", "label": "Query needed"},
+    "CONSISTENCY_ERROR":{"color": "red",    "icon": "✗", "label": "Inconsistency"},
+}
+
+def val(row, col):
+    v = ro
